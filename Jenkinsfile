@@ -24,7 +24,7 @@ pipeline{
         		withSonarQubeEnv('sonarqube-9.6') { 
               			//sh "sudo rm ~/.m2/repository/org/owasp/dependency-check-data/7.0/jsrepository.json"
         			sh "mvn test -Dtest=TestControllerTests  -DfailIfNoTests=false"
-        			sh "mvn clean install sonar:sonar -Dsonar.login=admin -Dsonar.password=admin"
+        			sh "mvn clean install sonar:sonar -Dsonar.login=admin -Dsonar.password=sonar"
     			}
         	}
         }
