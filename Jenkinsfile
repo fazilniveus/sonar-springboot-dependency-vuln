@@ -96,9 +96,7 @@ pipeline{
 			  
 			    script {
 				    echo "Push Docker Image"
-				    withCredentials([string(credentialsId: 'kubernetes', variable: 'kubernetes')]) {
-            				//sh "docker login -u fazilniveus -p ${kubernetes}"
-				    }
+
 				        myimage.push("${env.BUILD_ID}")
 				    
 			    }
