@@ -86,17 +86,18 @@ pipeline{
 		    steps {
 			    sh 'whoami'
 			    script {
-				    myimage = docker.build("fazilniveus/devops:${env.BUILD_ID}")
+				    myimage = docker.build("gcr.io/tech-rnd-project/springcicddemo:${env.BUILD_ID}")
 			    }
 		    }
 	    }
 	    
 	    stage("Push Docker Image") {
 		    steps {
+			  
 			    script {
 				    echo "Push Docker Image"
-				    withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
-            				sh "docker login -u fazilniveus -p ${dockerhub}"
+				    withCredentials([string(credentialsId: 'kubernetes', variable: 'kubernetes')]) {
+            				//sh "docker login -u fazilniveus -p ${kubernetes}"
 				    }
 				        myimage.push("${env.BUILD_ID}")
 				    
