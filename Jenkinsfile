@@ -2,7 +2,7 @@
 pipeline{
     agent any
     environment {
-        CREDENTIAL = credentials('kubernetes')
+        CREDENTIAL = 'kubernetes'
     }
     tools {
         maven 'Maven'
