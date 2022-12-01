@@ -2,7 +2,10 @@
 pipeline{
     agent any
     environment {
-        CREDENTIAL = 'kubernetes'
+	    PROJECT_ID = 'tech-rnd-project'
+            CLUSTER_NAME = 'network18-cluster'
+            LOCATION = 'us-central1-a'
+            CREDENTIAL = 'kubernetes'
     }
     tools {
         maven 'Maven'
@@ -42,46 +45,7 @@ pipeline{
                 }
             }
        }
-      stage('Zip the Report Folder'){
-            steps{
-              script{
-		      
-                 sh "sudo apt install zip unzip"
-                //sh "cd /var/lib/jenkins/workspace/demo-cloud-backend/target/site/"
-                sh "sudo zip -r jacoco.zip /var/lib/jenkins/workspace/demo-cloud-backend/target/site/jacoco"
-		sh "sudo mv /var/lib/jenkins/workspace/demo-cloud-backend/jacoco.zip /home/mohammad_fazil/jacoco.zip"
-                sh "pwd"
-                sh "ls -a"
-              }
-            }
-       }
-       stage('SonarQube report to GCS Bucket'){
-            steps{
-		    sh """
-                	gcloud version
-
-                	//gcloud auth activate-service-account --key-file="$CREDENTIAL"
-			gsutil cp -r /home/mohammad_fazil/jacoco.zip gs://sonarreport/codecoverage/
-		    """
-                
-            }
-       }
-      stage('Dependency Check') {
-        	steps{
-        		withSonarQubeEnv('sonarqube-9.7.1') { 
-              
-        			sh "mvn dependency-check:aggregate"
-				
-				sh """
-					gcloud version
-
-                			//gcloud auth activate-service-account --key-file="$CREDENTIAL"
-					gsutil cp -r ${env.WORKSPACE}/target/dependency-check-report.html gs://sonarreport/dependency/
-				
-				"""
-    			}
-        	}
-      }
+     
       stage('Build Docker Image') {
 		    steps {
 			 sh 'whoami'
