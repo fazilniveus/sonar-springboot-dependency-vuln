@@ -60,7 +60,7 @@ pipeline{
 		    sh """
                 	gcloud version
 
-                	gcloud auth activate-service-account --key-file="$CREDENTIAL"
+                	//gcloud auth activate-service-account --key-file="$CREDENTIAL"
 			gsutil cp -r /home/mohammad_fazil/jacoco.zip gs://sonarreport/codecoverage/
 		    """
                 
